@@ -9,7 +9,13 @@
       min-width="100%"
       align="center"
       sortable
-    />
+    >
+      <template slot-scope="scope">
+        <nuxt-link :to="'/search/' + scope.row.hname">
+          {{ scope.row.hname }}
+        </nuxt-link>
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 
