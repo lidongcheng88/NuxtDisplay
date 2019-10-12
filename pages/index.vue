@@ -35,13 +35,3 @@ export default {
   }
 }
 </script>
-
-<style>
-a{
-  color: #606266
-}
-
-a:hover {
-  text-decoration: underline
-}
-</style>

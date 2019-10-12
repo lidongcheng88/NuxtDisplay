@@ -3,7 +3,7 @@
     <el-container>
       <!-- Header -->
       <el-header>
-        <nuxt-link to="/" class="link" style="color:#fff">
+        <nuxt-link to="/" style="color:#fff">
           武侠英雄榜
         </nuxt-link>
       </el-header>
@@ -46,14 +46,6 @@
 .el-aside {
   color: #333;
   text-align: center
-}
-
-a {
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline
 }
 
 </style>
