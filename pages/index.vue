@@ -1,72 +1,47 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        NuxtDisplay
-      </h1>
-      <h2 class="subtitle">
-        Display of miniweb
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
-  </div>
+  <el-table :data="tableData" stripe style="width: 100%">
+    <el-table-column
+      prop="hname"
+      label="英雄"
+      min-width="50%"
+      align="center"
+      sortable
+    >
+      <template slot-scope="scope">
+        <nuxt-link :to="'/search/' + scope.row.hname">
+          {{ scope.row.hname }}
+        </nuxt-link>
+      </template>
+    </el-table-column>
+    <el-table-column prop="bname" label="武侠小说" align="center" sortable>
+      <template slot-scope="scope">
+        <nuxt-link :to="'/search/' + scope.row.bname">
+          {{ scope.row.bname }}
+        </nuxt-link>
+      </template>
+    </el-table-column>
+  </el-table>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import axios from 'axios'
+import global from '~/components/common'
 
 export default {
-  components: {
-    Logo
+  async asyncData () {
+    const resp = await axios.get(global.prefix)
+    // console.log(resp.data)
+    return { tableData: resp.data }
   }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+a{
+  color: #606266
 }
 
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
+a:hover {
+  text-decoration: underline
 }
 </style>

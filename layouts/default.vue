@@ -1,55 +1,83 @@
 <template>
   <div>
-    <nuxt />
+    <el-container>
+      <!-- Header -->
+      <el-header>
+        <nuxt-link to="/" class="link" style="color:#fff">
+          武侠英雄榜
+        </nuxt-link>
+      </el-header>
+      <el-container>
+        <!-- Aside -->
+        <el-aside width="300px">
+          <el-menu
+            :default-openeds="['3']"
+            :default-active="$route.path"
+            router
+          >
+            <el-submenu index="3">
+              <template slot="title">
+                <div style="font-weight:bold; font-size:15px">
+                  武侠小说
+                </div>
+              </template>
+              <el-menu-item v-for="(name, idx) in bname" :key="idx" :index="bookUrl(idx)">
+                {{ name.bname[0] }}
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-aside>
+        <!-- Main -->
+        <el-main><nuxt /></el-main>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+.el-header {
+  background-color: #409EFF;
+  line-height: 60px;
+  text-align: center;
   font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+  font-weight:bold
 }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
+.el-aside {
+  color: #333;
+  text-align: center
 }
 
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
+a {
   text-decoration: none;
-  padding: 10px 30px;
 }
 
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
+.link:hover {
+  text-decoration: underline
 }
 
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
 </style>
+
+<script>
+import global from '~/components/common'
+
+export default {
+  data () {
+    return {
+      bname: ''
+    }
+  },
+  mounted () {
+    this.$axios.get(global.prefix + '/books').then((res) => {
+      console.log(res.data)
+      this.bname = res.data
+    })
+  },
+  methods: {
+    bookUrl (idx) {
+      const id = parseInt(idx) + 1
+      return '/book/' + id
+    }
+  }
+}
+</script>
